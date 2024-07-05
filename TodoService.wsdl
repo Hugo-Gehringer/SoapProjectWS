@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ToDoListService"
+             targetNamespace="http://www.example.org/ToDoListService"
+             xmlns:tns="http://www.example.org/ToDoListService"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <types>
+        <xsd:schema targetNamespace="http://www.example.org/ToDoListService">
+            <!-- Define types for existing operations -->
+            <xsd:element name="addTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="title" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="assignation" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="addTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="task" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="updateTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                        <xsd:element name="title" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="assignation" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="updateTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="deleteTask">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="deleteTaskResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Define types for new getAllTasks operation -->
+            <xsd:element name="getAllTasks">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getAllTasksResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="tasks" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="addTaskRequest">
+        <part name="parameters" element="tns:addTask"/>
+    </message>
+    <message name="addTaskResponse">
+        <part name="parameters" element="tns:addTaskResponse"/>
+    </message>
+
+    <message name="getTaskRequest">
+        <part name="parameters" element="tns:getTask"/>
+    </message>
+    <message name="getTaskResponse">
+        <part name="parameters" element="tns:getTaskResponse"/>
+    </message>
+
+    <message name="updateTaskRequest">
+        <part name="parameters" element="tns:updateTask"/>
+    </message>
+    <message name="updateTaskResponse">
+        <part name="parameters" element="tns:updateTaskResponse"/>
+    </message>
+
+    <message name="deleteTaskRequest">
+        <part name="parameters" element="tns:deleteTask"/>
+    </message>
+    <message name="deleteTaskResponse">
+        <part name="parameters" element="tns:deleteTaskResponse"/>
+    </message>
+
+    <!-- Messages for getAllTasks -->
+    <message name="getAllTasksRequest">
+        <part name="parameters" element="tns:getAllTasks"/>
+    </message>
+    <message name="getAllTasksResponse">
+        <part name="parameters" element="tns:getAllTasksResponse"/>
+    </message>
+
+    <portType name="ToDoListPortType">
+        <operation name="addTask">
+            <input message="tns:addTaskRequest"/>
+            <output message="tns:addTaskResponse"/>
+        </operation>
+        <operation name="getTask">
+            <input message="tns:getTaskRequest"/>
+            <output message="tns:getTaskResponse"/>
+        </operation>
+        <operation name="updateTask">
+            <input message="tns:updateTaskRequest"/>
+            <output message="tns:updateTaskResponse"/>
+        </operation>
+        <operation name="deleteTask">
+            <input message="tns:deleteTaskRequest"/>
+            <output message="tns:deleteTaskResponse"/>
+        </operation>
+        <!-- New operation for getAllTasks -->
+        <operation name="getAllTasks">
+            <input message="tns:getAllTasksRequest"/>
+            <output message="tns:getAllTasksResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="ToDoListBinding" type="tns:ToDoListPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="addTask">
+            <soap:operation soapAction="http://www.example.org/ToDoListService/addTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getTask">
+            <soap:operation soapAction="http://www.example.org/ToDoListService/getTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="updateTask">
+            <soap:operation soapAction="http://www.example.org/ToDoListService/updateTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="deleteTask">
+            <soap:operation soapAction="http://www.example.org/ToDoListService/deleteTask"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <!-- Binding for getAllTasks -->
+        <operation name="getAllTasks">
+            <soap:operation soapAction="http://www.example.org/ToDoListService/getAllTasks"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="ToDoListService">
+        <port name="ToDoListPort" binding="tns:ToDoListBinding">
+            <soap:address location="http://localhost:8000/wsdl"/>
+        </port>
+    </service>
+</definitions>
